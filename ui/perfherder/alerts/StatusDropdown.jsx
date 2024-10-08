@@ -15,7 +15,7 @@ import {
   getFrameworkName,
   getFilledBugSummary,
   getStatus,
-  updateAlertSummary,
+  updateAlertSummary, revertAlert,
 } from '../perf-helpers/helpers';
 import { getData, create } from '../../helpers/http';
 import TextualSummary from '../perf-helpers/textualSummary';
@@ -264,6 +264,19 @@ export default class StatusDropdown extends React.Component {
       });
     }
     updateState({ alertSummary: data });
+  };
+
+  handleAlertCulprit = async (params) => {
+    const { alertSummary, updateState, updateViewState } = this.props;
+
+    const { data, failureStatus } = await revertAlert(
+      alertSummary.id,
+      params,
+    );
+
+    console.log("DAAAA");
+    console.log(data);
+    console.log(failureStatus);
   };
 
   isResolved = (alertStatus) =>

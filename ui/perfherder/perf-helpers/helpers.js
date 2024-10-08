@@ -625,8 +625,11 @@ export const getTitle = (alertSummary) => {
   return title;
 };
 
-export const updateAlertSummary = async (alertSummaryId, params) =>
-  update(getApiUrl(`${endpoints.alertSummary}${alertSummaryId}/`), params);
+export const updateAlertSummary = async (alertSummaryId) =>
+  update(getApiUrl(`${endpoints.alertSummary}${alertSummaryId}/`));
+
+export const revertAlert = async (params) =>
+  update(getApiUrl(`${endpoints.revert}`), params);
 
 export const convertParams = (params, value) =>
   Boolean(params[value] !== undefined && parseInt(params[value], 10));

@@ -8,6 +8,7 @@ import {
   Container,
   Row,
   Col,
+  Button,
 } from 'reactstrap';
 
 import { getJobsUrl } from '../../helpers/url';
@@ -18,6 +19,7 @@ import Assignee from './Assignee';
 import TagsList from './TagsList';
 import AlertHeaderTitle from './AlertHeaderTitle';
 
+
 const AlertHeader = ({
   frameworks,
   alertSummary,
@@ -25,7 +27,9 @@ const AlertHeader = ({
   issueTrackers,
   user,
   updateAssignee,
+  handleAlertCulprit
 }) => {
+
   const getIssueTrackerUrl = () => {
     const { issue_tracker_url: issueTrackerUrl } = issueTrackers.find(
       (tracker) => tracker.id === alertSummary.issue_tracker,
@@ -135,6 +139,14 @@ const AlertHeader = ({
             user={user}
           />
         </Col>
+        {/* Replace true with another condition*/}
+        {user.isStaff && true && (<Col className="p-0" xs="auto">
+          <Button className="ml-1"
+          color="darker-secondary"
+          size="xs" color="warning" onClick={handleAlertCulprit}>
+            Revert
+          </Button>
+       </Col>)}
       </Row>
       <Row>
         {performanceTags.length > 0 && (

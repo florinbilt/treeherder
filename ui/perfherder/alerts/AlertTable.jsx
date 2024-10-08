@@ -16,7 +16,7 @@ import RepositoryModel from '../../models/repository';
 import {
   getInitializedAlerts,
   containsText,
-  updateAlertSummary,
+  updateAlertSummary, revertAlert,
 } from '../perf-helpers/helpers';
 import TruncatedText from '../../shared/TruncatedText';
 import ErrorBoundary from '../../shared/ErrorBoundary';
@@ -189,6 +189,18 @@ export default class AlertTable extends React.Component {
     return orderBy(filteredAlerts, fields, sortOrders);
   };
 
+  handleAlertCulprit = async () => {
+    const { alertSummary } = this.state;
+    console.log("before")
+    const params = {'idAlert':alertSummary.id}
+    const { data, failureStatus } = await revertAlert(
+      params);
+
+    console.log("DAAAA");
+    console.log(data);
+    console.log(failureStatus);
+  };
+
   updateFilteredAlerts = () => {
     const { alertSummary, tableConfig } = this.state;
     Object.keys(tableConfig).forEach((key) => {
@@ -324,6 +336,7 @@ export default class AlertTable extends React.Component {
                         issueTrackers={issueTrackers}
                         user={user}
                         updateAssignee={this.updateAssignee}
+                        handleAlertCulprit = {this.handleAlertCulprit}
                       />
                     </FormGroup>
                   </Col>
